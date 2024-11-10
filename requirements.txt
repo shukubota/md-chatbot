@@ -1,0 +1,6 @@
+google-cloud-vision==3.4.4
+google-cloud-aiplatform==1.36.4
+pdf2image==1.17.0
+pillow==9.5.0
+protobuf==3.20.3
+requests==2.31.0
