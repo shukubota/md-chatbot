@@ -150,15 +150,14 @@ class CardEmbedding:
 def main():
     # 環境設定
     project_id = "gig-sandbox-ai"
-    dataset_id = "example_dataset"
+    dataset_id = "yugioh_dataset"
     source_table = "cards"
-    embedding_table = "card_embeddings_vertex"
+    embedding_table = "card_embeddings"
     location = "us-central1"  # VertexAI APIのロケーション
     
     # 認証設定
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gig-sandbox-ai-a724e4b9b06e.json"
     
-    # 実行
     embedder = CardEmbedding(
         project_id=project_id,
         dataset_id=dataset_id,
