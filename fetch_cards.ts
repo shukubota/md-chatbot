@@ -79,7 +79,7 @@ class YugiohScraper {
     
     try {
       await Deno.writeTextFile(filename, jsonString);
-      console.log(`Successfully saved card ${cid}`);
+      // console.log(`Successfully saved card ${cid}`);
     } catch (error) {
       console.error(`Error saving card ${cid}:`, error);
     }
@@ -91,6 +91,10 @@ class YugiohScraper {
         console.log(`Processing card ID: ${cid}`);
         const cardData = await this.getCardData(cid);
         if (cardData) {
+          if (cardData.card_info === "") {
+              console.log(`No data found for card ${cid}`);
+              return;
+          }
           await this.saveCardData(cardData);
         } else {
           console.log(`No data found for card ${cid}`);
@@ -115,14 +119,14 @@ class YugiohScraper {
     // バッチに分割して処理
     for (let i = 0; i < cardIds.length; i += this.batchSize) {
       const batch = cardIds.slice(i, i + this.batchSize);
-      console.log(`Processing batch ${i / this.batchSize + 1}`);
+      // console.log(`Processing batch ${i / this.batchSize + 1}`);
       
       await this.processBatch(batch);
       
       // バッチ間で少し待機してサーバーに負荷をかけすぎないようにする
-      if (i + this.batchSize < cardIds.length) {
-        await delay(1000);
-      }
+      // if (i + this.batchSize < cardIds.length) {
+      //   await delay(1000);
+      // }
     }
   }
 
@@ -137,10 +141,10 @@ async function main() {
     const scraper = new YugiohScraper();
     
     // バッチサイズを設定（同時に処理するリクエスト数）
-    scraper.setBatchSize(100);
+    scraper.setBatchSize(1000);
     
-    const startId = 10000;
-    const endId = 10101;
+    const startId = 1000;
+    const endId = 20000;
     
     await scraper.scrapeRange(startId, endId);
     
